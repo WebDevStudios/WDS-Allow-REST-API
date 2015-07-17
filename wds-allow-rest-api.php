@@ -138,9 +138,11 @@ class WDS_Allow_REST_API {
 	 * @return  null
 	 */
 	function plugin_classes() {
-		require_once $this->path . 'includes/network-admin.php';
-		// Attach other plugin classes to the base plugin class.
-		$this->network_admin = new WDSARA_Network_Admin();
+		if ( is_multisite() ) {
+			require_once $this->path . 'includes/network-admin.php';
+			// Attach other plugin classes to the base plugin class.
+			$this->network_admin = new WDSARA_Network_Admin();
+		}
 
 		require_once $this->path . 'includes/site-admin.php';
 		// Attach other plugin classes to the base plugin class.
@@ -156,7 +158,11 @@ class WDS_Allow_REST_API {
 	public function hooks() {
 		add_action( 'init', array( $this, 'init' ) );
 		add_filter( 'wds_network_require_login_for_rest_api', array( $this, 'maybe_allow_rest_api' ) );
-		$this->network_admin->hooks();
+
+		if ( is_multisite() ) {
+			$this->network_admin->hooks();
+		}
+
 		$this->admin->hooks();
 	}
 
@@ -206,7 +212,7 @@ class WDS_Allow_REST_API {
 
 		// Normal plugin activation looks different than network-wide activation
 		$plugin_activated         = in_array( $plugin, $plugins_activated );
-		$plugin_network_activated = array_key_exists( $plugin, $plugins_network_activated );
+		$plugin_network_activated = is_array( $plugins_network_activated ) && array_key_exists( $plugin, $plugins_network_activated );
 
 		// If WDS Network Require Login plugin is active, we're ok to procceed
 		return $plugin_activated || $plugin_network_activated;

@@ -17,16 +17,16 @@ class WDSARA_Site_Admin extends WDSARA_Admin_Base {
 
 	/**
 	 * Network admin object
-	 * @var WDSARA_Network_Admin
+	 * @var WDSARA_Network_Admin|false
 	 */
-	protected $network_admin = null;
+	protected $network_admin = false;
 
 	/**
 	 * Constructor
 	 * @since 0.1.0
 	 */
-	public function __construct( WDSARA_Network_Admin $network_admin ) {
-		$this->network_admin = $network_admin;
+	public function __construct( $network_admin ) {
+		$this->network_admin = is_a( $network_admin, 'WDSNRL_Network_Admin' ) ? $network_admin : false;
 	}
 
 	/**
@@ -36,26 +36,40 @@ class WDSARA_Site_Admin extends WDSARA_Admin_Base {
 	 * @since 0.1.0
 	 */
 	function fields() {
+		$options = array(
+			'bypass'                    => __( '<strong>Bypass</strong> login requirement', 'wds-allow-rest-api' ),
+			'require'                   => __( '<strong>Always require</strong> login for REST API on this site', 'wds-allow-rest-api' ),
+			'use_require_login_setting' => __( 'Use <strong>Require login</strong> setting', 'wds-allow-rest-api' ),
+		);
+
+		$desc = __( 'Enable or disable login requirement for the REST API.', 'wds-allow-rest-api' );
+
+		if ( $this->network_admin ) {
+			$options['use_network_setting'] = sprintf( __( '<strong>Use network level settin</strong>g (set to <strong>%s</strong>)', 'wds-allow-rest-api' ), $this->network_setting() );
+			$desc .= ' '. __( 'Will override network level setting.', 'wds-allow-rest-api' );
+		}
+
 		return array(
 			array(
-				'name'   => __( 'Bypass network-wide login requirement for the REST API', 'wds-network-require-login' ),
-				'desc'   => __( 'This can be overridden at the site level.', 'wds-network-require-login' ),
-				'id'     => 'allow_rest_api_network_wide',
-				'type'   => 'checkbox',
-
 				'name'    => __( 'Bypass login requirement for the REST API', 'wds-allow-rest-api' ),
-				'desc'    => __( 'Enable or disable login requirement for the REST API. Will override network level setting.', 'wds-allow-rest-api' ),
+				'desc'    => $desc,
 				'id'      => 'allow_rest_api',
 				'type'    => 'radio',
-				'default' => 'use_network_setting',
-				'options' => array(
-					'bypass'                    => __( '<strong>Bypass</strong> login requirement', 'wds-allow-rest-api' ),
-					'require'                   => __( '<strong>Always require</strong> login for REST API on this site', 'wds-allow-rest-api' ),
-					'use_require_login_setting' => __( 'Use <strong>Require login</strong> setting', 'wds-allow-rest-api' ),
-					'use_network_setting'       => sprintf( __( '<strong>Use network level settin</strong>g (set to <strong>%s</strong>)', 'wds-allow-rest-api' ), $this->network_setting() ),
-				),
+				'default' => array( $this, 'get_default' ),
+				'options' => $options,
 			),
 		);
+	}
+
+	/**
+	 * Get default value for our setting
+	 *
+	 * @since  0.1.0
+	 *
+	 * @return string Default value
+	 */
+	public function get_default() {
+		return $this->network_admin ? 'use_network_setting' : 'use_require_login_setting';
 	}
 
 	/**
@@ -92,7 +106,11 @@ class WDSARA_Site_Admin extends WDSARA_Admin_Base {
 			return $is_required;
 		}
 
-		return (bool) $this->network_admin->is_required_for_rest();
+		if ( $this->network_admin ) {
+			return (bool) $this->network_admin->is_required_for_rest();
+		}
+
+		return $is_required;
 	}
 
 }
