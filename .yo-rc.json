@@ -1,0 +1,17 @@
+{
+  "generator-plugin-wp": {
+    "name": "WDS Allow REST API",
+    "homepage": "http://webdevstudios.com",
+    "description": "If using the \"WDS Network Require Login\" plugin, this plugin adds some options for bypassing the login requirement for the REST API.",
+    "version": "0.1.0",
+    "author": "WebDevStudios",
+    "authoremail": "contact@webdevstudios.com",
+    "authorurl": "http://webdevstudios.com",
+    "license": "GPLv2",
+    "slug": "wds-allow-rest-api",
+    "classname": "WDS_Allow_REST_API",
+    "classprefix": "WDSARESTAPI_",
+    "prefix": "wds_allow_rest_api",
+    "year": 2015
+  }
+}
