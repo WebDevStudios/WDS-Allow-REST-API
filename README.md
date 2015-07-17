@@ -1,12 +1,12 @@
 # WDS Allow REST API #
-**Contributors:**      WebDevStudios
-**Donate link:**       http://webdevstudios.com
-**Tags:**
-**Requires at least:** 3.6.0
-**Tested up to:**      3.6.0
-**Stable tag:**        0.1.0
-**License:**           GPLv2
-**License URI:**       http://www.gnu.org/licenses/gpl-2.0.html
+**Contributors:**      WebDevStudios  
+**Donate link:**       http://webdevstudios.com  
+**Tags:**              multisite, multi-network, network, require login, authentication, access, closed, hidden, login, password, privacy, private, protected, registered only, restricted, JSON, JSON API, REST API, WP-API, API    
+**Requires at least:** 3.6.0  
+**Tested up to:**      3.6.0  
+**Stable tag:**        0.1.0  
+**License:**           GPLv2  
+**License URI:**       http://www.gnu.org/licenses/gpl-2.0.html  
 
 ## Description ##
 
