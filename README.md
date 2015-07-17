@@ -10,7 +10,7 @@
 
 ## Description ##
 
-If using the "WDS Network Require Login" plugin, this plugin adds some options for bypassing the login requirement for the REST API.
+If using the [WDS Network Require Login](https://github.com/WebDevStudios/WDS-Network-Require-Login) plugin, this plugin adds some options for bypassing the login requirement for the REST API.
 
 ## Installation ##
 

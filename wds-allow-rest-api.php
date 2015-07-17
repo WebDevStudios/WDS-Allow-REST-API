@@ -189,7 +189,9 @@ class WDS_Allow_REST_API {
 	/**
 	 * Check that the wds-network-require-login plugin requirement is met
 	 *
+	 * @link   https://github.com/WebDevStudios/WDS-Network-Require-Login WDS Network Require Login plugin
 	 * @since  0.1.0
+	 * @return null
 	 */
 	function has_wds_network_require_login() {
 		// If WDS Network Require Login is already loaded, great!
@@ -235,6 +237,7 @@ class WDS_Allow_REST_API {
 	/**
 	 * Adds a notice to the dashboard if the plugin requirements are not met
 	 *
+	 * @link   https://github.com/WebDevStudios/WDS-Network-Require-Login WDS Network Require Login plugin
 	 * @since  0.1.0
 	 * @return null
 	 */
