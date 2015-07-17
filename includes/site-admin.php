@@ -26,7 +26,7 @@ class WDSARA_Site_Admin extends WDSARA_Admin_Base {
 	 * @since 0.1.0
 	 */
 	public function __construct( $network_admin ) {
-		$this->network_admin = is_a( $network_admin, 'WDSNRL_Network_Admin' ) ? $network_admin : false;
+		$this->network_admin = is_a( $network_admin, 'WDSARA_Network_Admin' ) ? $network_admin : false;
 	}
 
 	/**
