@@ -3,7 +3,7 @@
  * Plugin Name: WDS Allow REST API
  * Plugin URI:  http://webdevstudios.com
  * Description: If using the "WDS Network Require Login" plugin, this plugin adds some options for bypassing the login requirement for the REST API.
- * Version:     0.1.0
+ * Version:     0.1.1
  * Author:      WebDevStudios
  * Author URI:  http://webdevstudios.com
  * Donate link: http://webdevstudios.com
@@ -186,10 +186,57 @@ class WDS_Allow_REST_API {
 	 */
 	public function maybe_allow_rest_api( $is_required ) {
 		if ( is_user_logged_in() ) {
-			return true;
+			return false;
+		}
+
+		// Check if authorization header token is enabled and if so, if it's found
+		if ( $this->admin->get_option( 'auth_key' ) && $this->has_authorization_header() ) {
+			return false;
 		}
 
 		return $this->admin->is_required_for_rest( $is_required );
+	}
+
+	/**
+	 * Get the authorization header
+	 *
+	 * @since  0.1.1
+	 * @return string|null Authorization header if set, null otherwise
+	 */
+	public function has_authorization_header() {
+
+		$auth_key   = strtolower( $this->admin->get_option( 'auth_key' ) );
+		$auth_value = $this->admin->get_option( 'auth_value' );
+
+		// Check for the authoization header case-insensitively
+		foreach ( $this->get_all_headers() as $key => $value ) {
+			if ( $auth_key == strtolower( $key ) ) {
+				return $value == $auth_value;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get the requrest headers. getallheaders wrapper
+	 *
+	 * @since  0.1.1
+	 * @return array Array of request headers
+	 */
+	public function get_all_headers() {
+		if ( function_exists( 'getallheaders' ) ) {
+			$headers = getallheaders();
+		} else {
+			$headers = '';
+			foreach ( $_SERVER as $name => $value )  {
+				if ( substr( $name, 0, 5 ) == 'HTTP_' ) {
+					$headers[ str_replace( ' ', '-', ucwords( strtolower( str_replace( '_', ' ', substr( $name, 5 ) ) ) ) ) ] = $value;
+				}
+			}
+		}
+
+		return $headers;
 	}
 
 	/**
