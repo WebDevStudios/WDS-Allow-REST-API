@@ -14,6 +14,8 @@ If using the [WDS Network Require Login](https://github.com/WebDevStudios/WDS-Ne
 
 Also gives the option to provide REST API access through a simple header auth key/value pair.
 
+This plugin only allows access to the read-only portion of the REST API. [OAuth1](https://github.com/WP-API/OAuth1) is the recommended authentication method for accessing the write-level API functionality. 
+
 ## Installation ##
 
 ### Manual Installation ###
