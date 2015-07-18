@@ -30,7 +30,6 @@ class WDSARA_Site_Admin extends WDSARA_Admin_Base {
 	}
 
 	/**
-	/**
 	 * Additional fields for the $metabox_id CMB box instance
 	 *
 	 * @since 0.1.0
@@ -49,7 +48,7 @@ class WDSARA_Site_Admin extends WDSARA_Admin_Base {
 			$desc .= ' '. __( 'Will override network level setting.', 'wds-allow-rest-api' );
 		}
 
-		return array(
+		$fields = array(
 			array(
 				'name'    => __( 'Bypass login requirement for the REST API', 'wds-allow-rest-api' ),
 				'desc'    => $desc,
@@ -58,7 +57,55 @@ class WDSARA_Site_Admin extends WDSARA_Admin_Base {
 				'default' => array( $this, 'get_default' ),
 				'options' => $options,
 			),
+			array(
+				'name'    => __( 'Optional REST API authorization override token', 'wds-allow-rest-api' ),
+				'desc'    => __( 'If login is required for REST API, this is an optional override which clients would pass as an additional header key and value to bypass the login requirement.<br>You will need to provide this key and token value when making requests to the REST API.', 'wds-allow-rest-api' ),
+				'id'      => 'authorization_override_title',
+				'type'    => 'title',
+				'show_on_cb' => array( $this, 'any_required' ),
+			),
+			array(
+				'name'    => __( 'Authorization override key', 'wds-allow-rest-api' ),
+				'desc'    => __( 'This is the header key. Recommended something like <code>wp-rest-authorizationkey</code>', 'wds-allow-rest-api' ),
+				'id'      => 'auth_key',
+				'type'    => 'text',
+				'attributes' => array( 'placeholder' => 'wp-rest-authorizationkey' ),
+				'show_on_cb' => array( $this, 'any_required' ),
+			),
+			array(
+				'name'    => __( 'Authorization override token', 'wds-allow-rest-api' ),
+				'desc'    => __( 'This is the header value. This should be a lengthy and unique value. Will be generated for you.', 'wds-allow-rest-api' ),
+				'id'      => 'auth_value',
+				'type'    => 'text',
+				'default' => array( $this, 'get_auth_token_value_default' ),
+				'show_on_cb' => array( $this, 'any_required' ),
+			),
 		);
+
+		return $fields;
+	}
+
+	/**
+	 * Generates a default long, unique value for the authentication token value
+	 *
+	 * @since  0.1.1
+	 *
+	 * @return string  Generated token value
+	 */
+	public function get_auth_token_value_default() {
+		return wp_generate_password( 32, false );
+	}
+
+	/**
+	 * Field show_on callback which allows field to show if
+	 * it's determined that auth for REST API is required
+	 *
+	 * @since  0.1.1
+	 *
+	 * @return bool Whether field should show
+	 */
+	public function any_required() {
+		return $this->is_required_for_rest( wds_nrl()->admin->is_required() );
 	}
 
 	/**
@@ -92,7 +139,7 @@ class WDSARA_Site_Admin extends WDSARA_Admin_Base {
 	 * @return boolean Enabled or disabled
 	 */
 	public function is_required_for_rest( $is_required ) {
-		$setting = wds_nrl()->admin->get_option( 'allow_rest_api' );
+		$setting = $this->get_option( 'allow_rest_api' );
 
 		if ( 'bypass' === $setting ) {
 			return false;
