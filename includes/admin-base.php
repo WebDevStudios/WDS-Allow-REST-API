@@ -40,6 +40,17 @@ abstract class WDSARA_Admin_Base {
 	}
 
 	/**
+	 * Get an option value
+	 *
+	 * @since  0.1.0
+	 * @param  string $key Options array key
+	 * @return mixed       Option value
+	 */
+	public function get_option( $key ) {
+		return wds_nrl()->admin->get_option( $key );
+	}
+
+	/**
 	 * Need to extend and should array of CMB2 field config arrays
 	 *
 	 * @since  0.1.0
