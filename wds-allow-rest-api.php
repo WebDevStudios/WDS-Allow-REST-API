@@ -297,7 +297,7 @@ class WDS_Allow_REST_API {
 	public function requirements_not_met_notice() {
 		// Output our error
 		echo '<div id="message" class="error">';
-		echo '<p>' . sprintf( __( 'WDS Allow REST API the <a href="https://github.com/WebDevStudios/WDS-Network-Require-Login">WDS Network Require Login plugin</a>, so it has been <a href="%s">deactivated</a>.', 'wds-allow-rest-api' ), admin_url( 'plugins.php' ) ) . '</p>';
+		echo '<p>' . sprintf( __( 'WDS Allow REST API requires the <a href="https://github.com/WebDevStudios/WDS-Network-Require-Login">WDS Network Require Login plugin</a>, so it has been <a href="%s">deactivated</a>.', 'wds-allow-rest-api' ), admin_url( 'plugins.php' ) ) . '</p>';
 		echo '</div>';
 	}
 
