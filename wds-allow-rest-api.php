@@ -42,7 +42,7 @@
  * @var  string               $basename      Plugin basename
  * @var  string               $url           Plugin URL
  * @var  string               $path          Plugin Path
- * @var  WDSARA_Admin         $admin         WDSARA_Admin
+ * @var  WDSARA_Site_Admin    $admin         WDSARA_Site_Admin
  * @var  WDSARA_Network_Admin $network_admin WDSARA_Network_Admin
  */
 class WDS_Allow_REST_API {
@@ -88,9 +88,9 @@ class WDS_Allow_REST_API {
 	protected $network_admin = null;
 
 	/**
-	 * Instance of WDSARA_Admin
+	 * Instance of WDSARA_Site_Admin
 	 *
-	 * @var WDSARA_Admin
+	 * @var WDSARA_Site_Admin
 	 * @since  0.1.0
 	 */
 	protected $admin = null;
