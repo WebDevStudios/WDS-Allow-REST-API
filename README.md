@@ -31,9 +31,6 @@ This plugin only allows access to the read-only portion of the REST API. [OAuth1
 
 ## Changelog ##
 
-### 0.1.2 ###
-* Update documentation to reflect the correct class name.
-
 ### 0.1.1 ###
 * Provide option to grant REST API access through a simple header auth key/value pair.
 

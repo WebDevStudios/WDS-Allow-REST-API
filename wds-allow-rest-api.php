@@ -3,7 +3,7 @@
  * Plugin Name: WDS Allow REST API
  * Plugin URI:  http://webdevstudios.com
  * Description: If using the "WDS Network Require Login" plugin, this plugin adds some options for bypassing the login requirement for the REST API.
- * Version:     0.1.2
+ * Version:     0.1.1
  * Author:      WebDevStudios
  * Author URI:  http://webdevstudios.com
  * Donate link: http://webdevstudios.com
