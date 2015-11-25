@@ -194,7 +194,12 @@ class WDS_Allow_REST_API {
 			return false;
 		}
 
-		return $this->admin->is_required_for_rest( $is_required );
+		// Output an error message if they are not logged-in and are required to be.
+		if ( $this->admin->is_required_for_rest( $is_required ) ) {
+			wp_send_json_error( __( 'You are required to be logged-in in order to access the REST API.', 'wds-allow-rest-api' ) );
+		}
+
+		return false;
 	}
 
 	/**
