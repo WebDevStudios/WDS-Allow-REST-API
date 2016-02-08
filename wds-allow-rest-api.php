@@ -284,9 +284,6 @@ class WDS_Allow_REST_API {
 			// Add a dashboard notice
 			add_action( 'all_admin_notices', array( $this, 'requirements_not_met_notice' ) );
 
-			// Deactivate our plugin
-			deactivate_plugins( $this->basename );
-
 			return false;
 		}
 
@@ -301,6 +298,9 @@ class WDS_Allow_REST_API {
 	 * @return null
 	 */
 	public function requirements_not_met_notice() {
+		// Deactivate our plugin
+		deactivate_plugins( $this->basename );
+
 		// Output our error
 		echo '<div id="message" class="error">';
 		echo '<p>' . sprintf( __( 'WDS Allow REST API requires the <a href="https://github.com/WebDevStudios/WDS-Network-Require-Login">WDS Network Require Login plugin</a>, so it has been <a href="%s">deactivated</a>.', 'wds-allow-rest-api' ), admin_url( 'plugins.php' ) ) . '</p>';
